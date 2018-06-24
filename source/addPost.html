@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Post</title>
+</head>
+<body>
+<div id="addPost">
+    <form name="addPost">
+        <h4>Add Link</h4>
+        <div>
+            <input id="title" type="text" placeholder="Title">
+        </div>
+        <div>
+            <input id="url" type="text" placeholder="URL">
+        </div>
+        <div style="display:none">
+            <textarea id="text" placeholder="Some Content"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Add Link">
+        </div>
+    </form>
+</div>
+
+<script>
+  if(!localStorage.getItem('token')){
+    window.history.pushState({}, '', '/login')
+  }
+  var addPost = document.forms.namedItem("addPost");
+
+  addPost.addEventListener('submit', function(ev) {
+    ev.preventDefault();
+
+    var title = document.getElementById('title').value,
+      url = document.getElementById('url').value,
+      text = document.getElementById('text').value,
+      token = localStorage.getItem('token');
+
+    console.log(title, url, text, token)
+
+    if(!token){
+      alert("Please Log In before posting.")
+    } else if (!title || !(url || text)){
+      alert("Please fill in both a title and a link before posting.")
+    } else {
+
+      var oReq = new XMLHttpRequest();
+
+      oReq.open("POST", "https://dabblefox-news.builtwithdark.com/addPost");
+      oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      oReq.onload = function(oEvent) {
+        if (oReq.status === 200) {
+          var response = JSON.parse(oReq.response);
+          console.log("POSTED", response.id)
+          window.location.assign('/posts?link=' + response.id)
+        } else {
+          console.log(oReq, oEvent);
+          alert("Something went wrong, please try again")
+        }
+      };
+
+      oReq.send(["title=", title, "&url=", url, "&text=", text, "&token=", token].join(''))
+    }
+
+  });
+</script>
+</body>
+</html>

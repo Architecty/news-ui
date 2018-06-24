@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Post</title>
+    <style type="text/css">
+        .body{max-width: 1000px; margin: auto;}
+        .comment{background-color: beige; margin-top: 8px; padding: 5px 0;}
+        .commentBody{display: flex;}
+        .commentBodyHidden{display: flex; font-style: italic}
+        .points{width:30px; text-align: center;}
+        .upVote{cursor: pointer}
+        .upVote.upVoted{color: blue; background-color:red}
+        .upVoteCount{cursor: pointer}
+        .username{font-weight: bold;}
+
+        .hidden{display:none}
+        .belowComment{display: flex; font-size: .8em; padding-left: 10px;}
+        .reply{cursor: pointer; padding-right: 15px;}
+        .reply:hover{text-decoration: underline}
+
+        .commentChildren{margin-left: 15px; border-left: 2px solid black}
+
+    </style>
+    <script>
+      function getTarget(e){
+        var target;
+        if(!e) var e = window.event;
+        if(e.target) target = e.target;
+        else if (e.srcElement) target = e.srcElement;
+        if(target.nodeType == 3) target = target.parentNode;
+
+        return target;
+      }
+
+      function showReply(e){
+        var target = getTarget(e)
+        var loggedInToken = window.localStorage.getItem('token');
+
+        if(!loggedInToken){
+          //Goto login with query
+          console.log("Not Logged In")
+        } else {
+          document.querySelectorAll('.replyBox').forEach(function(val){
+            val.classList.add('hidden');
+          })
+
+          target.parentElement.parentElement.querySelectorAll('.replyBox')[0].classList.remove('hidden')
+          console.log("Logged In")
+        }
+      }
+      function hideReply(e){
+        var target = getTarget(e)
+
+        target.parentElement.parentElement.classList.add('hidden')
+      }
+      function postReply(e){
+        var target = getTarget(e)
+
+        target.parentElement.parentElement.classList.add('hidden')
+      }
+
+      function showComment(e){
+        var target = getTarget(e)
+
+        document.querySelectorAll('.replyBox').forEach(function(val){
+          val.classList.add('hidden');
+        });
+        var topLevel = target.parentElement.parentElement.parentElement;
+        topLevel.querySelectorAll('.commentBodyHidden')[0].classList.add('hidden');
+        topLevel.querySelectorAll('.commentBody')[0].classList.remove('hidden');
+        topLevel.querySelectorAll('.commentChildren')[0].classList.remove('hidden');
+      }
+      function hideComment(e){
+        var target = getTarget(e)
+
+        var topLevel = target.parentElement.parentElement.parentElement.parentElement;
+        topLevel.querySelectorAll('.commentBodyHidden')[0].classList.remove('hidden');
+        topLevel.querySelectorAll('.commentBody')[0].classList.add('hidden');
+        topLevel.querySelectorAll('.commentChildren')[0].classList.add('hidden');
+      }
+      function toggleUpped(e){
+        var target = getTarget(e);
+
+        var upped = target.parentElement.getAttribute('data-upped');
+        var pointCount = parseInt(target.parentElement.querySelectorAll('.upVoteCount')[0].textContent);
+
+        var newState = !(upped === true || upped === 'true');
+        target.parentElement.setAttribute('data-upped', newState.toString());
+        if(newState){
+          target.parentElement.querySelectorAll('.upVote')[0].classList.add('upVoted')
+          target.parentElement.querySelectorAll('.upVoteCount')[0].innerHTML = pointCount + 1;
+        } else {
+          target.parentElement.querySelectorAll('.upVote')[0].classList.remove('upVoted');
+          target.parentElement.querySelectorAll('.upVoteCount')[0].innerHTML = pointCount - 1;
+        }
+        console.log(upped)
+      }
+    </script>
+</head>
+<body>
+<div class="body">
+    <div class="header"></div>
+    <div class="postHeader">
+        <div><a href="{Post URL}">{Post Title}</a></div>
+        <div>Posted by {Poster Name}</div>
+
+    </div>
+    <div style="margin: auto; width: 98%">
+        <div>
+            <textarea style="min-width: 200px; width: 100%"></textarea>
+        </div>
+        <div>
+            <button onclick="postReply()">
+                Add Comment
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div id="commentArea">
+
+    </div>
+</div>
+</body>
+</html>

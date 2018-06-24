@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cleaning News</title>
+    <style type="text/css">
+        .container{margin: auto; width: 1000px; background-color: bisque}
+        .header{ display:flex; background-color: mistyrose; padding: 5px}
+        .headerImage{}
+        .headerLeft{flex-grow: 1; text-align: left;  background-color: lightcyan}
+        .headerRight{flex-grow: 1; text-align: right; right: 0px;  background-color: palegreen}
+
+        .post{display: flex;}
+        .postNumber{}
+        .postVote{}
+        .postBody{}
+        .postTitle{}
+        .postDetails{font-size: .8em;}
+
+        .footer{text-align: center; padding: 5px}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="headerLeft">
+        <a><img src="images/logo-128x128.png" width="15px"></a>
+        <a href="/">Cleaner News</a> |
+        <a href="/new">New</a> |
+        <a href="/submit">Add a Post</a>
+        </div>
+        <div class="headerRight">
+            <a href="/account">UserName</a> (23) | <a href="/logout">Log Out</a>
+        </div>
+    </div>
+    <div class="list">
+
+        <div class="post">
+            <div class="postNumber">1</div>
+            <div class="postVote">^</div>
+            <div class="postBody">
+                <div class="postTitle"><a href="#">The title of a Longer Post</a> <small>(www.google.com)</small></div>
+                <div class="postDetails">42 Points by UserName 4 hours ago | 27 Comments</div>
+            </div>
+        </div>
+
+
+        <a href="/news?page=2">More</a>
+    </div>
+    <div class="footer">
+        <a href="/rules">Rules</a> |
+        <a href="/faq">FAQ</a> |
+        <a href="mailto:news@dabblefox.com">Help</a> |
+        <a href="/legal">Legal</a>
+    </div>
+
+</div>
+
+</body>
+</html>

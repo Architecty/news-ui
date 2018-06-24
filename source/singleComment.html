@@ -1,0 +1,39 @@
+
+<div class="comment">
+    <div class="commentBodyHidden hidden">
+        <div class="points"></div>
+        <div class="username">James Dunkan <span class="showComment" onclick="showComment()">[+]</span></div>
+    </div>
+
+    <div class="commentBody">
+        <div class="points" data-upped="false">
+            <div class="upVote" onclick="toggleUpped()">^</div>
+            <div class="upVoteCount" onclick="toggleUpped()">43</div>
+        </div>
+        <div class="right">
+            <div class="username">James Dunkan <span class="showComment" onclick="hideComment()">[-]</span></div>
+            <div class="text">Some random comment text goes here for where people will be writing and talking and all of that jazz.</div>
+            <div class="belowComment">
+                <div class="reply" onclick="showReply()">Reply</div>
+                <div class="hide">Hide Comment</div>
+            </div>
+            <div class="replyBox hidden">
+                <div>
+                    <textarea style="min-width: 200px; width: 95%"></textarea>
+                </div>
+                <div>
+                    <button onclick="hideReply()">
+                        Cancel
+                    </button>
+                    <button onclick="postReply()">
+                        Post Reply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commentChildren">
+
+
+    </div>
+</div>
