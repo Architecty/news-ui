@@ -27,13 +27,18 @@
         <div class="headerLeft">
         <a><img src="images/logo-128x128.png" width="15px"></a>
         <a href="/">Cleaner News</a> |
-        <a href="/new">New</a> |
-        <a href="/submit">Add a Post</a>
+        <a href="/addPost">Add a Post</a>
         </div>
         <div class="headerRight">
-            <a href="/account">UserName</a> (23) | <a href="/logout">Log Out</a>
+            <div id="loggedIn">
+                <a href="/account" id="username">UserName</a> (<span id="points">23</span>) | <a href="#" onclick="logout()">Log Out</a>
+            </div>
+            <div id="loggedOut">
+            <a href="/login">Log In / Register</a>
+            </div>
         </div>
     </div>
+
     <div class="list">
 
         <div class="post">
@@ -57,5 +62,28 @@
 
 </div>
 
+<script type="application/javascript">
+    var username = localStorage.getItem('username');
+    var token = localStorage.getItem('token');
+    var points = localStorage.getItem('points');
+    if(username){
+      document.getElementById('username').innerText = username
+    }
+    if(points){
+      document.getElementById('points').innerText = points
+    }
+    if(token){
+      document.getElementById('loggedOut').style.display = 'none';
+    } else {
+      document.getElementById('loggedIn').style.display = 'none';
+    }
+
+    function logout(){
+      localStorage.removeItem('username');
+      localStorage.removeItem('points');
+      localStorage.removeItem('token');
+      window.location.reload();
+    }
+</script>
 </body>
 </html>
